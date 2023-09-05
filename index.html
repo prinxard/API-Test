@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fetch POST API Call</title>
+  </head>
+  <body>
+    <h1>Fetch POST API Call</h1>
+    <button id="apiButton">POST API Call</button>
+    <div id="responseArea"></div>
+
+    <script>
+      const apiUrl = "https://bespoque.dev/rhm-live/utils/startAuth.php";
+      const headers = {
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoicHJpbmNlLnVAYmVzcG9xdWUubmciLCJzdGFmZk5hbWUiOiJQcmluY2UgVW5hY2h1a3d1IiwiZ3JvdXBzIjpbMSw0MV0sInN0YXRpb24iOiJIZWFkIE9mZmljZSIsImlhdCI6MTY5Mzg4Nzg4NywiZXhwIjoxNjkzOTAyMjg3fQ.ZsiVzi6Q0eNKX7h0U8DvkC3-TYJZa8D1Hz4ObWQmCeI",
+        "Content-Type": "application/json",
+      };
+
+      const data = {
+        Username: "prince.u@bespoque.ng",
+        Password: "prinxard",
+      };
+
+      const apiButton = document.getElementById("apiButton");
+      const responseArea = document.getElementById("responseArea");
+
+      apiButton.addEventListener("click", () => {
+        fetch(apiUrl, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok.");
+            }
+            return response.json();
+          })
+          .then((responseData) => {
+            responseArea.innerText = JSON.stringify(responseData, null, 2);
+          })
+          .catch((error) => {
+            responseArea.innerText = `Error: ${error.message}`;
+          });
+      });
+    </script>
+  </body>
+</html>
